@@ -11,7 +11,6 @@ import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
   ],
   imports: [
     CommonModule,
-    NgbDatepickerModule
   ],
   exports: [
   ]
