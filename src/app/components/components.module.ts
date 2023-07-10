@@ -1,18 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AddTaskComponent } from './add-task/add-task.component';
-import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
-
-
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 @NgModule({
-  declarations: [
-    AddTaskComponent
-  ],
-  imports: [
-    CommonModule,
-  ],
-  exports: [
-  ]
+  declarations: [AddTaskComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
 })
-export class ComponentsModule { }
+export class ComponentsModule {}

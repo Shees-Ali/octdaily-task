@@ -1,25 +1,76 @@
 <div class="container">
+  <h1>Task Manager</h1>
 
-    <h1>
-        Task Manager
-    </h1>
-
-    <div class="row search-box">
-        <!-- <p class="col-12 search-heading">
+  <div class="row search-box">
+    <!-- <p class="col-12 search-heading">
             Search Tasks :
         </p>
  -->
 
-        <div class="col-sm-6">
-            <div class="search-div input-group mb-3">
-                <input type="text" class="form-control" aria-label="Search" placeholder="Search">
-            </div>
-        </div>
+    <div class="col-md-6 col-lg-4">
+      <div class="search-div input-group mb-3">
+        <input
+          type="text"
+          class="form-control"
+          aria-label="Search"
+          placeholder="Search"
+        />
+      </div>
     </div>
+  </div>
 
-    <div class="add=div">
-        <button (click)="addTask()" class="btn btn-outline-primary utility-btns">
-            Add
-        </button>
-    </div>
+  <div class="add=div">
+    <button (click)="addTask()" class="btn btn-outline-primary utility-btns">
+      Add
+    </button>
+  </div>
+
+  <div class="tasks-table">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Description</th>
+          <th scope="col">Start Date</th>
+          <th scope="col">End Date</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">1</th>
+          <td>Mark</td>
+          <td>Otto</td>
+          <td>27-8-12</td>
+          <td>27-8-12</td>
+          <td>
+            <button class="btn btn-danger me-2">Delete</button>
+            <button class="btn btn-warning">Edit</button>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">2</th>
+          <td>Jacob</td>
+          <td>Thornton</td>
+          <td>27-8-12</td>
+          <td>27-8-12</td>
+          <td>
+            <button class="btn btn-danger me-2">Delete</button>
+            <button class="btn btn-warning">Edit</button>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">3</th>
+          <td colspan="2">Larry the Bird</td>
+          <td>27-8-12</td>
+          <td>27-8-12</td>
+          <td>
+            <button class="btn btn-danger me-2">Delete</button>
+            <button class="btn btn-warning">Edit</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
