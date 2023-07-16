@@ -10,6 +10,9 @@ import { BasePage } from '../base/base';
 })
 export class MainComponent extends BasePage implements OnInit {
   books: any[] = [];
+  search: string = '';
+  sortBy: string = 'name';
+  order: string = 'ascending';
   constructor(injector: Injector, private modalService: NgbModal) {
     super(injector);
   }
@@ -19,14 +22,19 @@ export class MainComponent extends BasePage implements OnInit {
   }
 
   async getAllBooks() {
-    const books = await this.network.getReadingList();
+    const params = {
+      search: this.search,
+      sortBy: this.sortBy,
+      order: this.order
+    }
+    const books = await this.network.getBooksList(params);
     this.books = books;
   }
 
   addBook() {
     const modalRef = this.modalService.open(AddBookComponent, {
       centered: true,
-      backdrop: 'static'
+      backdrop: 'static',
     });
     modalRef.result
       .then((res) => {
@@ -42,7 +50,7 @@ export class MainComponent extends BasePage implements OnInit {
   editBook(book: any) {
     const modalRef = this.modalService.open(AddBookComponent, {
       centered: true,
-      backdrop: 'static'
+      backdrop: 'static',
     });
     modalRef.componentInstance.book = book;
     modalRef.result
@@ -54,7 +62,6 @@ export class MainComponent extends BasePage implements OnInit {
       .catch((err) => {
         console.log(err);
       });
-    
   }
 
   deleteBook(book_id: any) {

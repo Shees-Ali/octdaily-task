@@ -19,8 +19,10 @@ export class NetworkService {
   }
 
   // Network call for getting all books
-  getReadingList() {
-    return this.httpGetResponse('books');
+  getBooksList(obj: any) {
+    const params = this.serialize(obj);
+    let url = 'books' + (params ? '?' + params : '');
+    return this.httpGetResponse(url);
   }
 
   // Network call for getting a book

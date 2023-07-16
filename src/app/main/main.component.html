@@ -11,6 +11,8 @@
       <div class="search-div input-group mb-3">
         <input
           type="text"
+          [(ngModel)]="search"
+          (change)="getAllBooks()"
           class="form-control"
           aria-label="Search"
           placeholder="Search"
