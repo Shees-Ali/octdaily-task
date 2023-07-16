@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { UtilityService } from './services/utility.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'octdaily-task';
+  showLoader: boolean = true;
+  constructor(
+    public utilityService: UtilityService
+  ) {
+    utilityService.isLoading.subscribe((res) => {
+      console.log(res);
+      this.showLoader = res;
+    });
+  }
 }

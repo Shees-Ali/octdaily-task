@@ -30,7 +30,7 @@ export class NetworkService {
 
   // Network call for updating a book
   updateBook(id: string, book: any) {
-    return this.httpPostResponse('books/' + id, book);
+    return this.httpPutResponse('books/' + id, book);
   }
 
   // Network call for deleting a book
@@ -56,7 +56,7 @@ export class NetworkService {
     key: any,
     data: any,
     id = null,
-    showloader = false,
+    showloader = true,
     showError = true,
     contenttype = 'application/json'
   ) {
@@ -75,7 +75,7 @@ export class NetworkService {
   httpGetResponse(
     key: any,
     id = null,
-    showloader = false,
+    showloader = true,
     showError = true,
     contenttype = 'application/json'
   ) {
@@ -92,7 +92,7 @@ export class NetworkService {
 
   // Function for PUT method
   httpPutResponse(key: any, data: any, id = null) {
-    return new Promise((resolve, reject) => {
+    return new Promise<any>((resolve, reject) => {
       this.api.put(key, data).subscribe((res: any) => {
         resolve(res);
       });
@@ -123,7 +123,7 @@ export class NetworkService {
     key: any,
     data: any,
     id = null,
-    showloader = false,
+    showloader = true,
     showError = true,
     contenttype = 'application/json'
   ): Promise<any> {

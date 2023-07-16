@@ -24,7 +24,10 @@ export class MainComponent extends BasePage implements OnInit {
   }
 
   addBook() {
-    const modalRef = this.modalService.open(AddBookComponent);
+    const modalRef = this.modalService.open(AddBookComponent, {
+      centered: true,
+      backdrop: 'static'
+    });
     modalRef.result
       .then((res) => {
         if (res.book_id) {
@@ -37,7 +40,21 @@ export class MainComponent extends BasePage implements OnInit {
   }
 
   editBook(book: any) {
-    console.log(book);
+    const modalRef = this.modalService.open(AddBookComponent, {
+      centered: true,
+      backdrop: 'static'
+    });
+    modalRef.componentInstance.book = book;
+    modalRef.result
+      .then((res) => {
+        if (res.book_id) {
+          this.getAllBooks();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    
   }
 
   deleteBook(book_id: any) {
@@ -45,7 +62,7 @@ export class MainComponent extends BasePage implements OnInit {
     this.utility.presentConfirm().then(async (res: any) => {
       if (res.isConfirmed) {
         await this.network.deleteBook(book_id);
-        this.utility.presentSuccessAlert("Successfully Deleted Book.");
+        this.utility.presentSuccessAlert('Successfully Deleted Book.');
         this.getAllBooks();
       }
     });

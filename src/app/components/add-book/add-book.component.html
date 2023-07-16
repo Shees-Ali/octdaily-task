@@ -30,7 +30,6 @@
             class="form-check-input switch-custom"
             type="checkbox"
             id="completed"
-            (change)="setDisabled()"
           />
           <label class="form-check-label mt-2" for="completed">{{
             this.addBookForm.controls["completed"].value == false ? "No" : "Yes"
@@ -83,7 +82,7 @@
           formControlName="status"
         >
           <option selected>Select Current Status</option>
-          <option value="Not Selected">Not Selected</option>
+          <option value="Not Started">Not Started</option>
           <option value="In Progress">In Progress</option>
           <option value="Completed">Completed</option>
         </select>

@@ -1,15 +1,22 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UtilityService {
+  isLoading: Subject<boolean> = new Subject();
+
   constructor() {}
 
-  async showLoader(msg = 'Please wait...') {}
+  showLoader() {
+    this.isLoading.next(true);
+  }
 
-  async hideLoader() {}
+  hideLoader() {
+    this.isLoading.next(false);
+  }
 
   showAlert(msg: string, title = 'Alert') {}
 
@@ -32,9 +39,9 @@ export class UtilityService {
   }
 
   presentConfirm(
-    title: string = 'Are you sure?',
     text: string = "You won't be able to revert this!",
-    confirmTxt: string = 'Yes, delete it!'
+    confirmTxt: string = 'Yes, delete it!',
+    title: string = 'Are you sure?',
   ) {
     return new Promise((resolve) => {
       Swal.fire({

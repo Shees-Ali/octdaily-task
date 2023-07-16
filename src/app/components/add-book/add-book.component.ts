@@ -1,4 +1,4 @@
-import { Component, Injector } from '@angular/core';
+import { Component, Injector, Input, OnInit } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { BasePage } from 'src/app/base/base';
@@ -8,9 +8,10 @@ import { BasePage } from 'src/app/base/base';
   templateUrl: './add-book.component.html',
   styleUrls: ['./add-book.component.scss'],
 })
-export class AddBookComponent extends BasePage {
+export class AddBookComponent extends BasePage implements OnInit {
   addBookForm: FormGroup<any>;
-
+  @Input() book: any;
+  bookID: any;
   constructor(injector: Injector, public activeModal: NgbActiveModal) {
     super(injector);
     this.addBookForm = this.formBuilder.group({
@@ -19,35 +20,53 @@ export class AddBookComponent extends BasePage {
       author: ['', Validators.required],
       completed: [false, Validators.required],
       status: ['', Validators.required],
-      completedOn: [{ value: 'TBD', disabled: true }, Validators.required],
+      completedOn: ['TBD', Validators.required],
     });
   }
+
+  ngOnInit() {
+    if (this.book) {
+      this.bookID = this.book.id;
+      delete this.book.id;
+      this.addBookForm.setValue(this.book);
+    }
+  }
+
   async save() {
     if (!this.addBookForm.valid) {
       this.utility.presentFailureAlert('Please Fill All Fields !', true);
       return;
     }
-
-    const formValue = this.addBookForm.value;
-    const res = await this.network.addBook(formValue);
-    console.log(res);
-    if (res && res.id) {
-      this.utility.presentSuccessAlert('Successfully Added Book !');
+    if (this.bookID) {
+      const formValue = this.addBookForm.value;
+      const res = await this.network.updateBook(this.bookID, formValue);
+      console.log(res);
       this.activeModal.close({
-        book_id: res.id,
+        book_id: this.bookID,
       });
+      this.utility.presentSuccessAlert('Successfully Updated Book !');
+    } else {
+      const formValue = this.addBookForm.value;
+      const res = await this.network.addBook(formValue);
+      if (res && res.id) {
+        this.activeModal.close({
+          book_id: res.id,
+        });
+        this.utility.presentSuccessAlert('Successfully Added Book !');
+      }
     }
   }
 
-  setDisabled() {
-    const flag =
-      this.addBookForm.controls['completed'].value == false ? true : false;
-    flag == true
-      ? this.addBookForm.controls['completedOn'].disable()
-      : this.addBookForm.controls['completedOn'].enable();
-  }
-
-  dismiss(reason: string) {
+  async dismiss(reason: string) {
+    if (this.addBookForm.touched && !this.bookID) {
+      const res = await this.utility.presentConfirm(
+        'If you quit data that you have entered will be lost',
+        'Yes Quit'
+      );
+      if (!res) {
+        return;
+      }
+    }
     this.activeModal.dismiss(reason);
   }
 }
