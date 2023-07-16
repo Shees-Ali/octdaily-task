@@ -13,20 +13,32 @@ export class NetworkService {
     public utility: UtilityService
   ) {}
 
-  addTask(task: any) {
-    return this.httpPostResponse('addTask', task);
+  // Network call for adding a book
+  addBook(book: any) {
+    return this.httpPostResponse('books', book);
   }
 
-  getTasks() {
-    return this.httpGetResponse('getTasks');
+  // Network call for getting all books
+  getReadingList() {
+    return this.httpGetResponse('books');
   }
 
-  getTaskDetails(id: string) {}
+  // Network call for getting a book
+  getBookDetail(id: string) {
+    return this.httpGetResponse('books/' + id);
+  }
 
-  updateTask(id: string, task: any) {}
+  // Network call for updating a book
+  updateBook(id: string, book: any) {
+    return this.httpPostResponse('books/' + id, book);
+  }
 
-  deleteTask(id: string) {}
+  // Network call for deleting a book
+  deleteBook(id: string) {
+    return this.httpDeleteResponse('books/' + id);
+  }
 
+  // Function for making url string from object of url params.
   serialize = (obj: any) => {
     const str: any[] = [];
     for (const p in obj) {
@@ -39,6 +51,7 @@ export class NetworkService {
     return str.join('&');
   };
 
+  // Function for POST method
   httpPostResponse(
     key: any,
     data: any,
@@ -58,13 +71,13 @@ export class NetworkService {
     );
   }
 
+  // Function for GET method
   httpGetResponse(
     key: any,
     id = null,
     showloader = false,
     showError = true,
-    contenttype = 'application/json',
-    returnAllResponse = false
+    contenttype = 'application/json'
   ) {
     return this.httpResponse(
       'get',
@@ -73,11 +86,11 @@ export class NetworkService {
       id,
       showloader,
       showError,
-      contenttype,
-      returnAllResponse
+      contenttype
     );
   }
 
+  // Function for PUT method
   httpPutResponse(key: any, data: any, id = null) {
     return new Promise((resolve, reject) => {
       this.api.put(key, data).subscribe((res: any) => {
@@ -86,6 +99,7 @@ export class NetworkService {
     });
   }
 
+  // Function for PATCH method
   httpPatchResponse(key: any, data: any, id = null) {
     return new Promise<any>((resolve, reject) => {
       this.api.patch(key, data).subscribe((res: any) => {
@@ -94,6 +108,7 @@ export class NetworkService {
     });
   }
 
+  // Function for DELETE method
   httpDeleteResponse(key: any) {
     return new Promise<any>((resolve, reject) => {
       this.api.delete(key).subscribe((res: any) => {
@@ -102,7 +117,7 @@ export class NetworkService {
     });
   }
 
-  // default 'Content-Type': 'application/json',
+  // Main function for makinf HTTP calls.
   httpResponse(
     type = 'get',
     key: any,
@@ -110,8 +125,7 @@ export class NetworkService {
     id = null,
     showloader = false,
     showError = true,
-    contenttype = 'application/json',
-    returnAllResponse = false
+    contenttype = 'application/json'
   ): Promise<any> {
     return new Promise((resolve, reject) => {
       if (showloader === true) {
@@ -128,50 +142,12 @@ export class NetworkService {
           if (showloader === true) {
             this.utility.hideLoader();
           }
-          if (res.bool !== true) {
-            if (showError) {
-              this.utility.presentSuccessToast(res.message);
-            }
-
-            if (returnAllResponse) {
-              resolve(res);
-              return;
-            }
-            reject(null);
-          } else {
-            if (returnAllResponse) {
-              resolve(res);
-              return;
-            }
-            resolve(res.data);
-          }
+          resolve(res);
         },
         (err) => {
-          console.log('err', err);
-
           this.utility.hideLoader();
-          if (showError) {
-            if (err.error) {
-              this.utility.presentFailureToast(err.error.message);
-              if (err.error.message == 'Authentication Failed') {
-                this.router.navigate(['/']);
-              }
-            } else {
-              this.utility.presentFailureToast(err.message);
-            }
-
-            if (returnAllResponse) {
-              resolve(err);
-              return;
-            }
-
-            reject(null);
-          }
-
-          if (returnAllResponse) {
-            resolve(err);
-            return;
-          }
+          this.utility.presentFailureAlert(err.error.title);
+          reject(err.error);
         }
       );
     }).catch((err) => {

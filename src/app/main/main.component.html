@@ -1,5 +1,5 @@
 <div class="container">
-  <h1>Task Manager</h1>
+  <h1>Reading List</h1>
 
   <div class="row search-box">
     <!-- <p class="col-12 search-heading">
@@ -20,7 +20,7 @@
   </div>
 
   <div class="add=div">
-    <button (click)="addTask()" class="btn btn-outline-primary utility-btns">
+    <button (click)="addBook()" class="btn btn-outline-primary utility-btns">
       Add
     </button>
   </div>
@@ -30,44 +30,31 @@
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">Name</th>
-          <th scope="col">Description</th>
-          <th scope="col">Start Date</th>
-          <th scope="col">End Date</th>
+          <th scope="col">Book Name</th>
+          <th scope="col">Author</th>
+          <th scope="col">Category</th>
+          <th scope="col">Status</th>
+          <th scope="col">Completed</th>
+          <th scope="col">Completed On</th>
           <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>27-8-12</td>
-          <td>27-8-12</td>
+        <tr *ngFor="let item of books; let i = index">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>{{ item.bookName }}</td>
+          <td>{{ item.author }}</td>
+          <td>{{ item.category }}</td>
+          <td>{{ item.status }}</td>
+          <td>{{ item.completed ? "Yes" : "No" }}</td>
+          <td>{{ item.completedOn }}</td>
           <td>
-            <button class="btn btn-danger me-2">Delete</button>
-            <button class="btn btn-warning">Edit</button>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>27-8-12</td>
-          <td>27-8-12</td>
-          <td>
-            <button class="btn btn-danger me-2">Delete</button>
-            <button class="btn btn-warning">Edit</button>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td colspan="2">Larry the Bird</td>
-          <td>27-8-12</td>
-          <td>27-8-12</td>
-          <td>
-            <button class="btn btn-danger me-2">Delete</button>
-            <button class="btn btn-warning">Edit</button>
+            <button (click)="deleteBook(item.id)" class="btn btn-danger me-2">
+              Delete
+            </button>
+            <button (click)="editBook(item)" class="btn btn-warning">
+              Edit
+            </button>
           </td>
         </tr>
       </tbody>

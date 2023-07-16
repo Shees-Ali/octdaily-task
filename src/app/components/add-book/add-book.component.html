@@ -1,0 +1,97 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Add Task</h4>
+  <button
+    type="button"
+    class="btn-close"
+    aria-label="Close"
+    (click)="dismiss('Cross click')"
+  ></button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="addBookForm">
+    <div class="mb-3">
+      <label for="name">Book Name</label>
+      <div class="input-group">
+        <input
+          class="form-control"
+          formControlName="bookName"
+          type="text"
+          placeholder="Enter Book Name"
+        />
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-6">
+        <label for="completed">Completed ? </label>
+        <div class="form-check form-switch">
+          <input
+            formControlName="completed"
+            class="form-check-input switch-custom"
+            type="checkbox"
+            id="completed"
+            (change)="setDisabled()"
+          />
+          <label class="form-check-label mt-2" for="completed">{{
+            this.addBookForm.controls["completed"].value == false ? "No" : "Yes"
+          }}</label>
+        </div>
+      </div>
+      <div class="col-6">
+        <label for="completedOn">Completed On</label>
+        <div class="input-group">
+          <input
+            class="form-control"
+            formControlName="completedOn"
+            type="date"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-6">
+        <label for="category">Category</label>
+        <div class="input-group">
+          <input
+            class="form-control"
+            formControlName="category"
+            type="text"
+            placeholder="Enter Category"
+          />
+        </div>
+      </div>
+      <div class="col-6">
+        <label for="author">Author</label>
+        <div class="input-group">
+          <input
+            class="form-control"
+            formControlName="author"
+            type="text"
+            placeholder="Enter Author"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="status">Status</label>
+      <div class="input-group">
+        <select
+          class="form-select"
+          aria-label="Status"
+          formControlName="status"
+        >
+          <option selected>Select Current Status</option>
+          <option value="Not Selected">Not Selected</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Completed">Completed</option>
+        </select>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-success" (click)="save()">Save</button>
+</div>
