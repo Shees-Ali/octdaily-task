@@ -2,6 +2,7 @@ import { Component, Injector, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddBookComponent } from '../components/add-book/add-book.component';
 import { BasePage } from '../base/base';
+import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-main',
@@ -9,10 +10,15 @@ import { BasePage } from '../base/base';
   styleUrls: ['./main.component.scss'],
 })
 export class MainComponent extends BasePage implements OnInit {
+  faCaretDown = faCaretDown;
+  faCaretUp = faCaretUp;
   books: any[] = [];
   search: string = '';
   sortBy: string = 'name';
   order: string = 'ascending';
+  pageNumber: number = 1;
+  pageSize: number = 5;
+  disableForward: boolean = false;
   constructor(injector: Injector, private modalService: NgbModal) {
     super(injector);
   }
@@ -25,10 +31,30 @@ export class MainComponent extends BasePage implements OnInit {
     const params = {
       search: this.search,
       sortBy: this.sortBy,
-      order: this.order
-    }
+      order: this.order,
+      page: this.pageNumber,
+      pageSize: this.pageSize
+    };
     const books = await this.network.getBooksList(params);
+    if (books.length < this.pageSize) {
+      this.disableForward = true;
+    } else {
+      this.disableForward = false;
+    }
     this.books = books;
+  }
+
+  updateFilters(sortBy: string, order: string) {
+    console.log({
+      search: this.search,
+      sortBy: this.sortBy,
+      order: this.order,
+      page: this.pageNumber,
+      pageSize: this.pageSize
+    });
+    this.sortBy = sortBy;
+    this.order = order;
+    this.getAllBooks();
   }
 
   addBook() {
@@ -73,5 +99,14 @@ export class MainComponent extends BasePage implements OnInit {
         this.getAllBooks();
       }
     });
+  }
+
+  paginate(direction: string) {
+    if (direction == 'forward') {
+      this.pageNumber++;
+    } else if (direction == 'backward') {
+      this.pageNumber--;
+    }
+    this.getAllBooks();
   }
 }

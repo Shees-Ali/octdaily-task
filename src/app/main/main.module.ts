@@ -5,6 +5,7 @@ import { MainRoutingModule } from './main-routing.module';
 import { MainComponent } from './main.component';
 import { ComponentsModule } from '../components/components.module';
 import { FormsModule } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     MainRoutingModule,
     ComponentsModule,
-    FormsModule
+    FormsModule,
+    FontAwesomeModule
   ]
 })
 export class MainModule { }

@@ -32,12 +32,144 @@
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">Book Name</th>
-          <th scope="col">Author</th>
-          <th scope="col">Category</th>
-          <th scope="col">Status</th>
+          <th scope="col">
+            <div class="d-flex align-items-end">
+              Book Name
+              <div class="buttons-container">
+                <button
+                  (click)="updateFilters('name', 'ascending')"
+                  class="btn border-0"
+                  [ngClass]="
+                    sortBy == 'name' && order == 'ascending' ? '' : 'inactive'
+                  "
+                >
+                  <fa-icon [icon]="faCaretUp"></fa-icon>
+                </button>
+                <button
+                  (click)="updateFilters('name', 'descending')"
+                  class="btn border-0"
+                  [ngClass]="
+                    sortBy == 'name' && order == 'descending' ? '' : 'inactive'
+                  "
+                >
+                  <fa-icon [icon]="faCaretDown"></fa-icon>
+                </button>
+              </div>
+            </div>
+          </th>
+          <th scope="col" class="d-flex align-items-end">
+            <div class="d-flex align-items-end">
+              Author
+              <div class="buttons-container">
+                <button
+                  (click)="updateFilters('author', 'ascending')"
+                  class="btn border-0"
+                  [ngClass]="
+                    sortBy == 'author' && order == 'ascending' ? '' : 'inactive'
+                  "
+                >
+                  <fa-icon [icon]="faCaretUp"></fa-icon>
+                </button>
+                <button
+                  (click)="updateFilters('author', 'descending')"
+                  class="btn border-0"
+                  [ngClass]="
+                    sortBy == 'author' && order == 'descending'
+                      ? ''
+                      : 'inactive'
+                  "
+                >
+                  <fa-icon [icon]="faCaretDown"></fa-icon>
+                </button>
+              </div>
+            </div>
+          </th>
+          <th scope="col">
+            <div class="d-flex align-items-end">
+              Category
+              <div class="buttons-container">
+                <button
+                  (click)="updateFilters('category', 'ascending')"
+                  class="btn border-0"
+                  [ngClass]="
+                    sortBy == 'category' && order == 'ascending'
+                      ? ''
+                      : 'inactive'
+                  "
+                >
+                  <fa-icon [icon]="faCaretUp"></fa-icon>
+                </button>
+                <button
+                  (click)="updateFilters('category', 'descending')"
+                  class="btn border-0"
+                  [ngClass]="
+                    sortBy == 'category' && order == 'descending'
+                      ? ''
+                      : 'inactive'
+                  "
+                >
+                  <fa-icon [icon]="faCaretDown"></fa-icon>
+                </button>
+              </div>
+            </div>
+          </th>
+          <th scope="col">
+            <div class="d-flex align-items-end">
+              Status
+              <div class="buttons-container">
+                <button
+                  (click)="updateFilters('status', 'ascending')"
+                  class="btn border-0"
+                  [ngClass]="
+                    sortBy == 'status' && order == 'ascending' ? '' : 'inactive'
+                  "
+                >
+                  <fa-icon [icon]="faCaretUp"></fa-icon>
+                </button>
+                <button
+                  (click)="updateFilters('status', 'descending')"
+                  class="btn border-0"
+                  [ngClass]="
+                    sortBy == 'status' && order == 'descending'
+                      ? ''
+                      : 'inactive'
+                  "
+                >
+                  <fa-icon [icon]="faCaretDown"></fa-icon>
+                </button>
+              </div>
+            </div>
+          </th>
           <th scope="col">Completed</th>
-          <th scope="col">Completed On</th>
+          <th scope="col">
+            <div class="d-flex align-items-end">
+              Completed On
+              <div class="buttons-container">
+                <button
+                  (click)="updateFilters('completed_on', 'ascending')"
+                  class="btn border-0"
+                  [ngClass]="
+                    sortBy == 'completed_on' && order == 'ascending'
+                      ? ''
+                      : 'inactive'
+                  "
+                >
+                  <fa-icon [icon]="faCaretUp"></fa-icon>
+                </button>
+                <button
+                  (click)="updateFilters('completed_on', 'descending')"
+                  class="btn border-0"
+                  [ngClass]="
+                    sortBy == 'completed_on' && order == 'descending'
+                      ? ''
+                      : 'inactive'
+                  "
+                >
+                  <fa-icon [icon]="faCaretDown"></fa-icon>
+                </button>
+              </div>
+            </div>
+          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -61,5 +193,28 @@
         </tr>
       </tbody>
     </table>
+
+    <nav>
+      <ul class="pagination d-flex justify-content-center">
+        <li class="page-item">
+          <a
+            class="page-link"
+            [ngClass]="pageNumber == 1 ? 'disabled' : ''"
+            (click)="paginate('backward')"
+          >
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li class="page-item">
+          <a
+            class="page-link"
+            (click)="paginate('forward')"
+            [ngClass]="disableForward ? 'disabled' : ''"
+          >
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
   </div>
 </div>
