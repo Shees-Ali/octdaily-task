@@ -40,7 +40,6 @@ export class AddBookComponent extends BasePage implements OnInit {
     if (this.bookID) {
       const formValue = this.addBookForm.value;
       const res = await this.network.updateBook(this.bookID, formValue);
-      console.log(res);
       this.activeModal.close({
         book_id: this.bookID,
       });

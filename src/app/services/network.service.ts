@@ -153,7 +153,6 @@ export class NetworkService {
         }
       );
     }).catch((err) => {
-      console.log(err);
     });
   }
 }

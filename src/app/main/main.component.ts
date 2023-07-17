@@ -45,13 +45,6 @@ export class MainComponent extends BasePage implements OnInit {
   }
 
   updateFilters(sortBy: string, order: string) {
-    console.log({
-      search: this.search,
-      sortBy: this.sortBy,
-      order: this.order,
-      page: this.pageNumber,
-      pageSize: this.pageSize
-    });
     this.sortBy = sortBy;
     this.order = order;
     this.getAllBooks();
@@ -69,7 +62,6 @@ export class MainComponent extends BasePage implements OnInit {
         }
       })
       .catch((err) => {
-        console.log(err);
       });
   }
 
@@ -86,12 +78,10 @@ export class MainComponent extends BasePage implements OnInit {
         }
       })
       .catch((err) => {
-        console.log(err);
       });
   }
 
   deleteBook(book_id: any) {
-    console.log(book_id);
     this.utility.presentConfirm().then(async (res: any) => {
       if (res.isConfirmed) {
         await this.network.deleteBook(book_id);

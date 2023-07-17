@@ -12,7 +12,6 @@ export class AppComponent {
     public utilityService: UtilityService
   ) {
     utilityService.isLoading.subscribe((res) => {
-      console.log(res);
       this.showLoader = res;
     });
   }
