@@ -6,6 +6,12 @@ import Swal from 'sweetalert2';
   providedIn: 'root',
 })
 export class UtilityService {
+  /* Utlity Functions for 
+    - Showing and Hiding loader 
+    - Showing Success of Failure Alert using Swal
+    - Present a Confirm Alert using Swal
+  */
+
   isLoading: Subject<boolean> = new Subject();
 
   constructor() {}
@@ -17,8 +23,6 @@ export class UtilityService {
   hideLoader() {
     this.isLoading.next(false);
   }
-
-  showAlert(msg: string, title = 'Alert') {}
 
   presentSuccessAlert(msg: string, showConfirm: boolean = false) {
     Swal.fire({

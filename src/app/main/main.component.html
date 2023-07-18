@@ -192,6 +192,13 @@
     <nav>
       <ul class="pagination d-flex justify-content-center">
         <li class="page-item">
+          <select (change)="changePageSize($event)" class="form-control" name="pageSize" id="">
+            <option selected [value]="5">5</option>
+            <option [value]="10">10</option>
+            <option [value]="15">15</option>
+          </select>
+        </li>
+        <li class="page-item">
           <a
             class="page-link"
             [ngClass]="pageNumber == 1 ? 'disabled' : ''"

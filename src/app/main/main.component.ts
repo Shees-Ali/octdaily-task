@@ -27,13 +27,14 @@ export class MainComponent extends BasePage implements OnInit {
     this.getAllBooks();
   }
 
+  // Function for getting all books
   async getAllBooks() {
     const params = {
       search: this.search,
       sortBy: this.sortBy,
       order: this.order,
       page: this.pageNumber,
-      pageSize: this.pageSize
+      pageSize: this.pageSize,
     };
     const books = await this.network.getBooksList(params);
     if (books.length < this.pageSize) {
@@ -41,15 +42,27 @@ export class MainComponent extends BasePage implements OnInit {
     } else {
       this.disableForward = false;
     }
+    if (books.length == 0) {
+      return;
+    }
     this.books = books;
   }
 
+  // Function for updating Filters for Books List
   updateFilters(sortBy: string, order: string) {
     this.sortBy = sortBy;
     this.order = order;
     this.getAllBooks();
   }
 
+  // Function for updating Page size for pagination
+  changePageSize($event: any) {
+    const value = $event.target.value;
+    this.pageSize = value;
+    this.getAllBooks();
+  }
+
+  // Opens add book modal
   addBook() {
     const modalRef = this.modalService.open(AddBookComponent, {
       centered: true,
@@ -61,10 +74,10 @@ export class MainComponent extends BasePage implements OnInit {
           this.getAllBooks();
         }
       })
-      .catch((err) => {
-      });
+      .catch((err) => {});
   }
 
+  // Opens edit book modal
   editBook(book: any) {
     const modalRef = this.modalService.open(AddBookComponent, {
       centered: true,
@@ -77,10 +90,10 @@ export class MainComponent extends BasePage implements OnInit {
           this.getAllBooks();
         }
       })
-      .catch((err) => {
-      });
+      .catch((err) => {});
   }
 
+  // Deletes Book and asks for confirmation
   deleteBook(book_id: any) {
     this.utility.presentConfirm().then(async (res: any) => {
       if (res.isConfirmed) {
@@ -91,6 +104,7 @@ export class MainComponent extends BasePage implements OnInit {
     });
   }
 
+  // paginates in the forward or backward direction
   paginate(direction: string) {
     if (direction == 'forward') {
       this.pageNumber++;
